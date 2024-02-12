@@ -44,7 +44,6 @@ spec:
             failureThreshold: 1
             timeoutSeconds: 1
             successThreshold: 1
-        
           envFrom:
             - configMapRef:
                 name: goserver-env
@@ -53,7 +52,12 @@ spec:
           volumeMounts:
             - mountPath: "/go/myfamily"
               name: config
+            - mountPath: "/go/pvc"
+              name: goserver-volume
       volumes:
+        - name: goserver-volume
+          persistentVolumeClaim:
+            claimName: goserver-pvc
         - name: config
           configMap:
             name: configmap-family
